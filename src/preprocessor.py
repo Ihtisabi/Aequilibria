@@ -13,9 +13,21 @@ class TextPreprocessor:
     def _download_nltk_data(self):
         """Download required NLTK data"""
         try:
+            # Set NLTK data path for Railway
+            if os.path.exists('/app'):  # Railway environment
+                nltk.data.path.append('/app/nltk_data')
+            
+            # Try to find punkt data
             nltk.data.find('tokenizers/punkt')
+            print("✅ NLTK punkt data found")
         except LookupError:
-            nltk.download('punkt', quiet=True)
+            try:
+                print("📥 Downloading NLTK punkt data...")
+                nltk.download('punkt', quiet=True)
+                nltk.download('punkt_tab', quiet=True)
+                print("✅ NLTK data downloaded")
+            except Exception as e:
+                print(f"⚠️ NLTK download failed: {e}")
     
     def remove_patterns(self, text: str) -> str:
         """Remove URLs, markdown links, handles, and special characters"""
