@@ -4,6 +4,7 @@ from nltk.tokenize import word_tokenize, sent_tokenize
 from nltk.stem import PorterStemmer
 from scipy.sparse import hstack
 import numpy as np
+import os
 
 class TextPreprocessor:
     def __init__(self):
